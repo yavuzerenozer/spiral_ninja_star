@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Experiment 3</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script id="vertex-shader" type="x-shader/x-vertex">#version 300 es
+        in vec4 vPosition;
+        in vec3 vColor;
+            
+        uniform float theta;
+        uniform float scale;
+        uniform float radius;
+        uniform float spiral;
+            
+        out vec4 fColor;
+
+        void
+        main()
+        {
+            float s = sin( theta );
+            float c = cos( theta );
+            
+            float scaleamnt = scale;
+            
+            gl_Position.x = (-s * vPosition.y + c * vPosition.x) * scaleamnt + cos(spiral)*(sin(radius))/2.0;
+            gl_Position.y = (s * vPosition.x + c * vPosition.y) * scaleamnt + sin(spiral)*(sin(radius))/2.0;
+            gl_Position.z = 0.0;
+            gl_Position.w = 1.0;   
+            
+                
+            
+            fColor = vec4(vColor, 1.0);
+        }
+        </script>
+
+        <script id="fragment-shader" type="x-shader/x-fragment">#version 300 es
+
+        precision mediump float;
+
+        in vec4 fColor;
+        out vec4 oColor;
+
+        void
+        main()
+        {
+            oColor = fColor;
+        }
+        </script>
+        
+        
+        <script src="webgl-utils.js" defer></script>
+        <script src="initShaders.js" defer></script>
+        <script src="MV.js" defer></script>
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <div>Ninja Star Spiral</div>
+        
+        <canvas id="glCanvas" width="640" height="640"></canvas>        
+        
+        <br/>
+        <button id="StartSpin">Start Spin</button>
+        <button id="StopSpin">Stop Spin</button>
+        
+        <select id="SpinSpeed" size="2">
+            <option value="0">+</option>
+            <option value="1">-</option>
+            
+        </select>
+        
+        <br/>
+        <button id="StartScale">Start Scale</button>
+        <button id="StopScale">Stop Scale</button>
+        
+        <br/>
+        <button id="StartSpiral">Start Spiral</button>
+        <button id="StopSpiral">Stop Spiral</button>
+        
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    
+</body>
+</html>
